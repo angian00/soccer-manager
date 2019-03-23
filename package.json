@@ -1,0 +1,15 @@
+{
+  "name": "soccer-manager",
+  "version": "0.1.0",
+  "description": "Soccer league simulation",
+  "main": "index.js",
+  "dependencies": {
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

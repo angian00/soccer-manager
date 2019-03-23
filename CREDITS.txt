@@ -1,0 +1,12 @@
+- algoritmo round robin: Wikipedia
+
+- nomi/cognomi stranieri:
+post-elaborazione da raw dump IMDb
+
+
+- dizionario cognomi italiani:
+https://sourceforge.net/projects/linguistico
+
+- file csv nomi italiani:
+gist GitHub di tezzutezzu
+https://gist.github.com/tezzutezzu/8f025345cadc5f92b9b311bf032b264d
