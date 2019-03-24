@@ -1,0 +1,6 @@
+{
+	"name": "Test League",
+	"description": "Description of Test League",
+	"teams": [ "A", "B", "C", "D" ]
+}
+

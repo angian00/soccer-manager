@@ -1,18 +1,15 @@
+
  - architettura
- 	v scelta architettura
  	- trasformare name generators e round robin in moduli
  	- vedere esempio full stack react
 
- - creare progetto github
  - scelta API
  	v operazioni
  	- schema URL
 
- v struttura (dati) torneo
- - script schema mysql
+ - implem API
+ 	- usare logger
 
- v calcolo calendario
- v generatore nomi giocatori
  
  - front-end
  	- flusso pagine
@@ -33,24 +30,15 @@
 + nomi di fantasia + nome città (es. football americano)
 
 
-## Generazione nomi giocatori
-v stranieri:
-	v fonte: sample IMDb
-	v as is
-v italiani:
-	v fonte: file di testo da www
-	v implem algoritmo
-
 
 ## Stat SPI principali club 
 https://projects.fivethirtyeight.com/soccer-api/club/spi_global_rankings.csv
 
 
-
 ## API
 
 ### league
-- create
+v create
 - start next year
 - generate rounds (schedule)
 - simulate next round
@@ -73,32 +61,6 @@ https://projects.fivethirtyeight.com/soccer-api/club/spi_global_rankings.csv
 - simulate
 
 
-## struttura dati
+## Bugfixing
+ - model: capire modo di fare create con association già valorizzata
 
-### league
-- id
-- name
-- description
-
-### team
-- id
-- league_id
-- name
-
-### schedule
-- fixture_id
-- league_id
-- year
-- round
-- home_team
-- visitor_team
-- played
-- home_goals
-- visitor_goals
-
-### player
-- id
-- league_id
-- first_name
-- surname
-- skill(s)...
