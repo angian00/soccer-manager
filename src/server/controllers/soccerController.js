@@ -1,6 +1,16 @@
 const model = require('../models/soccerModel');
 
 
+exports.getLeague = (req, res) => {
+	var leagueId = req.params.id;
+
+	model.League.findOne({ where: {id: leagueId} }).then(league => {
+		res.json(league);
+	}).catch(err => {
+		res.status(500).send("Database error: " + err);
+	});
+};
+
 exports.createLeague = (req, res) => {
 	return model.sequelize.transaction(t => {
 		return model.League.create({

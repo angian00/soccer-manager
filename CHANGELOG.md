@@ -6,10 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
-- Basic skeleton of git project.
-
-- Round-robin schedule generator.
-- File-based player name generator(s).
+- Basic skeleton of full stack app
 
 - SQL schema
-- First API method implementation (/league/create)
+- API endpoints
+	- GET /league/:id
+	- POST /league/create
+
+- Custom business logic:
+	- Round-robin schedule generator.
+	- File-based player name generator(s).

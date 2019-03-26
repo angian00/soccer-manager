@@ -1,9 +1,8 @@
-# Logs
 logs
 *.log
 
-# Dependency directories
 node_modules/
-
-# Optional npm cache directory
 .npm
+
+dist
+yarn.lock
