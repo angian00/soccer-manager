@@ -1,16 +1,7 @@
 
  - architettura
  	- trasformare name generators e round robin in moduli
- 	- vedere esempio full stack react
 
- - scelta API
- 	v operazioni
- 	- schema URL
-
- - implem API
- 	- usare logger
-
- 
  - front-end
  	- flusso pagine
  	- brainstorming layout grafico
@@ -39,8 +30,8 @@ https://projects.fivethirtyeight.com/soccer-api/club/spi_global_rankings.csv
 
 ### league
 v create
-- start next year
-- generate rounds (schedule)
+- edit teams
+- start next year: generate rounds (schedule)
 - simulate next round
 - get match results so far
 - get scoreboard (standings)
@@ -63,4 +54,6 @@ v create
 
 ## Bugfixing
  - model: capire modo di fare create con association già valorizzata
-
+ - database: creare da sequelize se non esiste
+ - verificare problemi router react
+ - visualizzazione responsive nav bar
