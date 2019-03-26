@@ -29,8 +29,11 @@ https://projects.fivethirtyeight.com/soccer-api/club/spi_global_rankings.csv
 ## API
 
 ### league
-v create
 - edit teams
+	- compare old teams with new
+	- delete old teams
+	- add new teams
+
 - start next year: generate rounds (schedule)
 - simulate next round
 - get match results so far
@@ -57,3 +60,4 @@ v create
  - database: creare da sequelize se non esiste
  - verificare problemi router react
  - visualizzazione responsive nav bar
+ - sostituire favicon

@@ -3,6 +3,12 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFutbol } from '@fortawesome/free-solid-svg-icons';
+library.add(faFutbol)
+
+
 import CreateLeague from './components/createLeague.component';
 import EditLeague from './components/editLeague.component';
 import IndexLeague from './components/indexLeague.component';
@@ -24,21 +30,21 @@ class DebugRouter extends Router {
 export default class App extends Component {
 	render() {
 		return (
-			//<Router>
-			<DebugRouter>
+			//<DebugRouter>
+			<Router>
 				<div className="container">
 					<nav className="navbar navbar-expand-lg navbar-light bg-light">
-						<Link to={'/'} className="navbar-brand">SM</Link>
+						<Link to={'/'} className="navbar-brand"></Link>
 						<div className="collapse navbar-collapse" id="navbarSupportedContent">
 							<ul className="navbar-nav mr-auto">
 								<li className="nav-item">
 									<Link to={'/'} className="nav-link">Home</Link>
 								</li>
 								<li className="nav-item">
-									<Link to={'/createLeague'} className="nav-link">Create League</Link>
+									<Link to={'/indexLeague'} className="nav-link">Index</Link>
 								</li>
 								<li className="nav-item">
-									<Link to={'/indexLeague'} className="nav-link">Index</Link>
+									<Link to={'/createLeague'} className="nav-link">Create League</Link>
 								</li>
 							</ul>
 						</div>
@@ -46,8 +52,7 @@ export default class App extends Component {
 
 					<br/>
 					
-					<h2>Soccer Manager</h2>
-					<h3>by AnGian</h3>
+					<h2><FontAwesomeIcon icon="futbol" /> Soccer League Manager</h2>
 
 					<br/>
 					
@@ -57,8 +62,8 @@ export default class App extends Component {
 						<Route path='/indexLeague' component={ IndexLeague } />
 					</Switch>
 				</div>
-			</DebugRouter>
-			//</Router>
+			</Router>
+			//</DebugRouter>
 		);
 	}
 }

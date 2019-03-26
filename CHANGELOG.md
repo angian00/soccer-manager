@@ -10,8 +10,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - SQL schema
 - API endpoints
+	- GET /league
 	- GET /league/:id
 	- POST /league/create
+	- POST /league/update
+	- POST /league/delete
 
 - Custom business logic:
 	- Round-robin schedule generator.
