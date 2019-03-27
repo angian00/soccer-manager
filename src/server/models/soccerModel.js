@@ -33,7 +33,6 @@ League.init({
 	sequelize,
 });
 
-exports.League = League;
 
 
 class Team extends Sequelize.Model {}
@@ -46,10 +45,52 @@ Team.init({
 	sequelize,
 });
 
-League.hasMany(Team, { foreignKey: 'league_id' });
-Team.belongsTo(League, { foreignKey: 'league_id' });
+League.hasMany(Team, { foreignKey: "leagueId" });
+Team.belongsTo(League, { foreignKey: "leagueId" });
 
+
+class Fixture extends Sequelize.Model {}
+Fixture.init({
+		year: {
+			type: Sequelize.INTEGER,
+			allowNull: false
+		},
+		day: {
+			type: Sequelize.INTEGER,
+			allowNull: false
+		},
+		played: {
+			type: Sequelize.BOOLEAN,
+			allowNull: false,
+			defaultValue: false
+		},
+		homeGoals: {
+			type: Sequelize.INTEGER,
+			allowNull: true
+		},
+		visitorGoals: {
+			type: Sequelize.INTEGER,
+			allowNull: true
+		},
+	}, {
+	sequelize,
+});
+
+League.hasMany(Fixture, { foreignKey: "leagueId" });
+Fixture.belongsTo(League, { foreignKey: "leagueId" });
+
+Team.hasMany(Fixture, { foreignKey: "homeTeam" });
+Team.hasMany(Fixture, { foreignKey: "visitorTeam" });
+Fixture.belongsTo(Team, { foreignKey: "homeTeam" });
+Fixture.belongsTo(Team, { foreignKey: "visitorTeam" });
+
+
+League.sync();
+Team.sync();
+Fixture.sync();
 
 exports.League = League;
 exports.Team = Team;
+exports.Fixture = Fixture;
+
 exports.sequelize = sequelize;

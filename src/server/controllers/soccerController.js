@@ -1,6 +1,8 @@
 const logger = require('../logging');
 const model = require('../models/soccerModel');
 
+const Scheduler = require('../soccer/scheduler');
+
 
 exports.getAllLeagues = (req, res) => {
 	model.League.findAll({}).then(leagues => {
@@ -18,9 +20,8 @@ exports.getLeague = (req, res) => {
 		if (league) {
 			res.json(league);
 		} else {
-			//TODO: check it goes here
 			res.status(404).send("League with id: " + leagueId + " not found");		
-		}		
+		}
 	}).catch(err => {
 		logger.error(err);
 		res.status(500).send("Database error: " + err);
@@ -44,9 +45,7 @@ exports.createLeague = (req, res) => {
 						model.Team.create({
 							name: teamName,
 							leagueId: newLeagueId
-						}, {transaction: t}).then( team => {
-							team.setLeague(newLeague);
-						})
+						}, {transaction: t})
 					);
 				}
 			}
@@ -108,3 +107,65 @@ exports.deleteLeague = (req, res) => {
 };
 
 
+exports.newLeagueYear = (req, res) => {
+	let leagueId = parseInt(req.params.id);
+
+	return model.sequelize.transaction(t => {
+		return model.League.findOne({ where: {id: leagueId}, include: [ model.Team ], transaction: t}).then(league => {
+			if (!league) {
+				res.status(404).send("League with id: " + leagueId + " not found");		
+			
+			} else {
+				let pTeams = league.getTeams().then(teams => {
+					let teamIds = [];
+
+					for (let t of teams) {
+						teamIds.push(t.id);
+					}
+
+					return teamIds;
+				});
+
+				let pYear = model.Fixture.max("year", { where: { league_id: leagueId} });
+
+				return Promise.all([pTeams, pYear]).then(pValues => {
+					let teamIds = pValues[0];
+					let maxYear = pValues[1];
+
+					let nextYear = 1;
+					if (maxYear) {
+						nextYear = maxYear + 1;
+					}
+
+					let s = new Scheduler(teamIds);
+					let schedule = s.getSchedule();
+
+					let fixturePromises = [];
+					for (let iDay in schedule) {
+						//logger.info("---- day #%d ", (iDay+1));
+						for (let currMatch of schedule[iDay]) {
+							//logger.info("%s - %s", currMatch[0], currMatch[1]);
+							let homeTeamId = currMatch[0];
+							let visitorTeamId = currMatch[1];
+
+							fixturePromises.push(model.Fixture.create({ year:  nextYear, day: iDay, 
+								leagueId: leagueId, homeTeam: homeTeamId, visitorTeam: visitorTeamId }, {transaction: t}));
+						}
+					}
+
+					return Promise.all(fixturePromises).then( () => {
+						return nextYear;
+					}).catch( err => {
+						throw err;
+					});
+				});
+			}
+		});
+
+	}).then( newYear => {
+		res.send("Year " + newYear + " initialized");
+	}).catch(err => {
+		logger.error(err);
+		res.status(500).send("Database error: " + err);
+	});
+};

@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 	- POST /league/create
 	- POST /league/update
 	- POST /league/delete
+	- POST /league/newYear
 
 - Custom business logic:
 	- Round-robin schedule generator.

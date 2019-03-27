@@ -16,6 +16,6 @@ module.exports = function(app) {
 	app.route('/api/league/delete/:id')
 		.post(soccer.deleteLeague);
 
-	// app.route('/api/league/newYear')
-	// 	.post(soccer.newLeagueYear);
+	app.route('/api/league/newYear/:id')
+		.post(soccer.newLeagueYear);
 };

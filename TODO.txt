@@ -1,10 +1,7 @@
 
- - architettura
- 	- trasformare name generators e round robin in moduli
-
  - front-end
  	- flusso pagine
- 	- brainstorming layout grafico
+ 	- customizzazione colori, font, layout
 
  - generazione casuale risultati
  	- marcatori
@@ -22,7 +19,7 @@
 
 
 
-## Stat SPI principali club 
+## Stat SPI principali club
 https://projects.fivethirtyeight.com/soccer-api/club/spi_global_rankings.csv
 
 
@@ -34,30 +31,34 @@ https://projects.fivethirtyeight.com/soccer-api/club/spi_global_rankings.csv
 	- delete old teams
 	- add new teams
 
-- start next year: generate rounds (schedule)
 - simulate next round
 - get match results so far
 - get scoreboard (standings)
 
 ### team
+- edit name
 - get game history
-- get stats
-- get players
-+ edit lineup/strategy
++ get stats
++ get players
+++ edit lineup/strategy
 
 ### players
-- get game history
-+ get/edit stats
++ get game history
+++ get/edit stats
 
 ### game
 - get result
-- get stats
-- simulate
+++ get stats
+++ simulate
 
 
 ## Bugfixing
- - model: capire modo di fare create con association già valorizzata
- - database: creare da sequelize se non esiste
+
+## Improvements
+ - navigazione: fare back/refresh dopo creazione/edit/delete
+ - aggiungere middleware di validazione
+ - separare meglio logica db da controller
  - verificare problemi router react
  - visualizzazione responsive nav bar
  - sostituire favicon
+ + promozioni/retrocessioni tra leghe

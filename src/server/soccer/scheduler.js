@@ -9,7 +9,7 @@ const logger = createLogger({
 });
 
 
-class RoundRobinTournament {
+class RoundRobinScheduler {
 	constructor(teams) {
 		this.teams = teams.slice(0);
 		arrayShuffle(this.teams);
@@ -17,18 +17,18 @@ class RoundRobinTournament {
 		this.buildRound();
 		this.buildSecondRound();
 		//this.checkFixtures();
-		this.printFixtures();
+		//this.printSchedule();
 	}
 
 	buildRound() {
 		let nTeams = this.teams.length;
-		let nFixtures = nTeams - 1;
+		let nDays = nTeams - 1;
 
 		let rotatingList = this.teams.slice(1);
-		this.fixtures = [];
+		this.days = [];
 
-		for (let iFixture=0; iFixture < nFixtures; iFixture++) {
-			logger.debug("computing fixture #%d", iFixture);
+		for (let iDay=0; iDay < nDays; iDay++) {
+			logger.debug("computing league day #%d", iDay);
 
 			// accoppia i giocatori "ripiegando" la rotating list, 
 			// ad es. per 8 giocatori:
@@ -43,17 +43,17 @@ class RoundRobinTournament {
 			visitor.reverse();
 
 			// assegna il turno, alternando casa e trasferta tra i turni
-			let newFixture = [];
+			let newDay = [];
 			for (let j=0; j < nTeams/2; j++) {
-				if (iFixture % 2 == 0) {
-					newFixture.push([visitor[j], home[j]]);
+				if (iDay % 2 == 0) {
+					newDay.push([visitor[j], home[j]]);
 				} else {
-					newFixture.push([home[j], visitor[j]]);
+					newDay.push([home[j], visitor[j]]);
 				}
 			}
 
-			//logger.warn("newFixture: %j", newFixture);
-			this.fixtures.push(newFixture);
+			//logger.warn("newDay: %j", newDay);
+			this.days.push(newDay);
 			
 			// ruota la lista, tenendo ferma la prima squadra {
 			//  0 | 7 | 1 | 2   ->
@@ -63,20 +63,20 @@ class RoundRobinTournament {
 		}
 
 		// randomize fixture order
-		arrayShuffle(this.fixtures);
+		arrayShuffle(this.days);
 	}
 
 	buildSecondRound() {
-		let nFixtures = this.fixtures.length;
+		let nDays = this.days.length;
 
-		for (let iFixture = 0; iFixture < nFixtures; iFixture ++) {
-			let currFixture = this.fixtures[iFixture];
+		for (let iDay = 0; iDay < nDays; iDay ++) {
+			let currDay = this.days[iDay];
 
-			let newFixture = [];
-			for (let currMatch of currFixture) {
-				newFixture.push([currMatch[1], currMatch[0]]);
+			let newDay = [];
+			for (let currMatch of currDay) {
+				newDay.push([currMatch[1], currMatch[0]]);
 			}
-			this.fixtures.push(newFixture);
+			this.days.push(newDay);
 		}
 	}
 
@@ -90,8 +90,8 @@ class RoundRobinTournament {
 		}
 
 		let allMatches = new Set();
-		for (let currFixture of this.fixtures) {
-			for (let currMatch of currFixture) {
+		for (let currDay of this.days) {
+			for (let currMatch of currDay) {
 				// cerca matches duplicati (a meno dell'ordine dei due team)
 				let normMatch = currMatch.slice(0).sort();
 
@@ -120,34 +120,25 @@ class RoundRobinTournament {
 		}
 	}
 
-	printFixtures() {
-		let iFixture = 1;
-		for (let currFixture of this.fixtures) {
-			console.log("---- Fixture #" + iFixture + " ----");
+	printSchedule() {
+		let iDay = 1;
+		for (let currDay of this.days) {
+			console.log("---- Fixture #" + iDay + " ----");
 			
-			for (let currMatch of currFixture) {
+			for (let currMatch of currDay) {
 				console.log(currMatch[0] + " - " + currMatch[1]);
 			}
 
 			console.log("");
-			iFixture ++;
+			iDay ++;
 		}
+	}
+
+	getSchedule() {
+		return this.days;
 	}
 }
 
-
-let teamList = [];
-let nTeams = 20;
-for (let iTeam=1; iTeam <=nTeams; iTeam ++) {
-	teamList.push(iTeam.toString());
-}
-
-let rrt = new RoundRobinTournament(teamList);
-
-
-//-----------------------------------
-// utils
-//-----------------------------------
 
 function arrayShuffle(a) {
 	for (let i = a.length - 1; i > 0; i--) {
@@ -155,3 +146,7 @@ function arrayShuffle(a) {
 		[a[i], a[j]] = [a[j], a[i]];
 	}
 }
+
+
+module.exports = RoundRobinScheduler;
+
