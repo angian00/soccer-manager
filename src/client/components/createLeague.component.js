@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 export default class CreateLeague extends Component {
-	constructor(props) {
+  	constructor(props) {
 		super(props);
 		this.onChangeName = this.onChangeName.bind(this);
 		this.onChangeDescription = this.onChangeDescription.bind(this);
@@ -32,11 +32,15 @@ export default class CreateLeague extends Component {
 		for (let i=0; i < 20; i ++) {
 			teams.push("T" + i);
 		}
-		//obj.teams = teams;
+		obj.teams = teams;
 		//
 
-		axios.post('http://localhost:8080/api/league/create', obj)
-			.then(res => console.log(res.data));
+		axios.post("http://localhost:8080/api/league/create", obj)
+			.then(res => {
+				console.log(res.data);
+				console.log(this.props.history);
+				this.props.history.push('/indexLeague');
+			});
 
 		this.setState({ name: "", description: "" });
 	}

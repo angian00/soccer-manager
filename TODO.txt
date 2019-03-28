@@ -13,10 +13,7 @@
 
 
 ## Generazione nomi squadre (italiane)
-- nomi squadre campionato serie A
-- nomi squadre campionato serie D
 + nomi di fantasia + nome città (es. football americano)
-
 
 
 ## Stat SPI principali club
@@ -30,7 +27,7 @@ https://projects.fivethirtyeight.com/soccer-api/club/spi_global_rankings.csv
 	- compare old teams with new
 	- delete old teams
 	- add new teams
-
+- get (current year) schedule
 - simulate next round
 - get match results so far
 - get scoreboard (standings)
@@ -55,10 +52,14 @@ https://projects.fivethirtyeight.com/soccer-api/club/spi_global_rankings.csv
 ## Bugfixing
 
 ## Improvements
- - navigazione: fare back/refresh dopo creazione/edit/delete
+ - chiarire funzionamento Switch, Link Router
+ - canale notifica errori REST
  - aggiungere middleware di validazione
  - separare meglio logica db da controller
- - verificare problemi router react
- - visualizzazione responsive nav bar
- - sostituire favicon
+ - nav bar:
+ 	? visualizzazione responsive
+ 	? togliere
+ - pulsante crea nuova league in basso
+
+ ? verificare problemi router react
  + promozioni/retrocessioni tra leghe

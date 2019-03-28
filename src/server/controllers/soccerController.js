@@ -16,9 +16,15 @@ exports.getAllLeagues = (req, res) => {
 exports.getLeague = (req, res) => {
 	let leagueId = parseInt(req.params.id);
 
-	model.League.findOne({ where: {id: leagueId} }).then(league => {
+	model.League.findOne({ where: {id: leagueId}, include: [ model.Team ] }).then(league => {
 		if (league) {
+			// NB: convert to plain object, not json string
+			league = league.toJSON();
+			league.currYear = 1; //TODO: compute currYear
+			logger.warn("league before send: %j", league);
+			//TODO: compute stats if computeStats==true
 			res.json(league);
+
 		} else {
 			res.status(404).send("League with id: " + leagueId + " not found");		
 		}

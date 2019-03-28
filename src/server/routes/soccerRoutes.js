@@ -1,21 +1,25 @@
 module.exports = function(app) {
-	var soccer = require('../controllers/soccerController');
+	var soccer = require("../controllers/soccerController");
 
-	app.route('/api/league')
+	app.route("/api/leagues")
 		.get(soccer.getAllLeagues);
 
-	app.route('/api/league/:id')
+	app.route("/api/league/:id")
 		.get(soccer.getLeague);
 
-	app.route('/api/league/create')
+	app.route("/api/league/create")
 		.post(soccer.createLeague);
 
-	app.route('/api/league/update/:id')
+	app.route("/api/league/:id/update")
 		.post(soccer.updateLeague);
 
-	app.route('/api/league/delete/:id')
+	app.route("/api/league/:id/delete")
 		.post(soccer.deleteLeague);
 
-	app.route('/api/league/newYear/:id')
+	app.route("/api/league/:id/newYear")
 		.post(soccer.newLeagueYear);
+
+//	app.route("/api/league/:id/nextFixtures")
+//		.get(soccer.nextFixtures);
 };
+""

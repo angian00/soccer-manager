@@ -7,6 +7,7 @@ export default class EditLeague extends Component {
 		super(props);
 		this.onChangeName = this.onChangeName.bind(this);
 		this.onChangeDescription = this.onChangeDescription.bind(this);
+		this.onChangeTeamName = this.onChangeTeamName.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 
 		this.state = { name: "", description: "" };
@@ -30,6 +31,10 @@ export default class EditLeague extends Component {
 		this.setState({ description: e.target.value })  
 	}
 
+	onChangeTeamName(e) {
+		//TODO: onChangeTeamName
+	}
+
 	onSubmit(e) {
 		e.preventDefault();
 		const obj = {
@@ -37,10 +42,11 @@ export default class EditLeague extends Component {
 			description: this.state.description
 		};
 
-		axios.post('http://localhost:8080/api/league/update/'+this.props.match.params.id, obj)
-			.then(res => console.log(res.data));
-
-		this.props.history.push('/indexLeague');
+		axios.post("http://localhost:8080/api/league/" + this.props.match.params.id + "/update", obj)
+			.then(res => {
+				console.log(res.data);
+				this.props.history.push('/indexLeague');
+			});
 	}
 
 	render() {
@@ -81,7 +87,8 @@ export default class EditLeague extends Component {
 								<div className="row">
 									<label className="col-sm-2 col-form-label-sm text-muted">id #127</label>
 									<div className="input-group col-sm-10">
-										<input type="text" className="form-control form-control-sm" value="Team 1" />
+										<input type="text" className="form-control form-control-sm" 
+											value="Team 1" onChange={this.onChangeTeamName} />
 										<div className="input-group-append">
 											<button className="btn btn-outline-secondary btn-sm form-control-sm" type="button">&times;</button>
 										</div>
@@ -93,7 +100,8 @@ export default class EditLeague extends Component {
 								<div className="row">
 									<label className="col-sm-2 col-form-label-sm text.right text-muted">id #333</label>
 									<div className="input-group col-sm-10">
-										<input type="text" className="form-control form-control-sm" value="Team 2" />
+										<input type="text" className="form-control form-control-sm" 
+											value="Team 2" onChange={this.onChangeTeamName} />
 										<div className="input-group-append">
 											<button className="btn btn-outline-secondary btn-sm form-control-sm" type="button">&times;</button>
 										</div>

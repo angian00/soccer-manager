@@ -9,16 +9,18 @@ import { faFutbol } from '@fortawesome/free-solid-svg-icons';
 library.add(faFutbol)
 
 
+import './app.css';
+import IndexLeague from './components/indexLeague.component';
 import CreateLeague from './components/createLeague.component';
 import EditLeague from './components/editLeague.component';
-import IndexLeague from './components/indexLeague.component';
+import ViewLeague from './components/viewLeague.component';
 
 
 class DebugRouter extends Router {
 	constructor(props){
 		super(props);
 		console.log('initial history is: ', JSON.stringify(this.history, null,2))
-		this.history.listen((location, action)=>{
+		this.history.listen((location, action) => {
 			console.log(
 				`The current URL is ${location.pathname}${location.search}${location.hash}`
 			)
@@ -52,14 +54,15 @@ export default class App extends Component {
 
 					<br/>
 					
-					<h2><FontAwesomeIcon icon="futbol" /> Soccer League Manager</h2>
+					<h1><FontAwesomeIcon icon="futbol" /> Soccer League Manager</h1>
 
 					<br/>
 					
 					<Switch>
-						<Route exact path='/createLeague' component={ CreateLeague } />
-						<Route path='/editLeague/:id' component={ EditLeague } />
 						<Route path='/indexLeague' component={ IndexLeague } />
+						<Route path='/createLeague' component={ CreateLeague } />
+						<Route path='/editLeague/:id' component={ EditLeague } />
+						<Route path='/viewLeague/:id' component={ ViewLeague } />
 					</Switch>
 				</div>
 			</Router>

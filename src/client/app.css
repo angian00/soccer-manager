@@ -1,8 +1,16 @@
-h1 {
-  color: green;
+
+.table-results th {
+	text-align: center;
+} 
+
+.table-results tbody td:first-of-type {
+	text-align: left;
 }
 
-body {
-  text-align: center;
-  margin: auto;
+.table-results tbody td:nth-of-type(+2) {
+	text-align: center;
+}
+
+.table-results tbody td:last-of-type {
+	text-align: right;
 }
