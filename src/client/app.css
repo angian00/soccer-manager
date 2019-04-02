@@ -14,3 +14,12 @@
 .table-results tbody td:last-of-type {
 	text-align: right;
 }
+
+
+#scoreboardTable th {
+	text-align: center;
+}
+
+#scoreboardTable td {
+	text-align: center;
+}

@@ -18,5 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 	- POST /league/newYear
 
 - Custom business logic:
-	- Round-robin schedule generator.
-	- File-based player name generator(s).
+	- Round-robin schedule generator
+	- File-based player name generator(s)
+	- Current season schedule and results
+	- Compute current season scoreboard
+	- Basic result generator

@@ -19,6 +19,9 @@ module.exports = function(app) {
 	app.route("/api/league/:id/newYear")
 		.post(soccer.newLeagueYear);
 
+	app.route("/api/league/:id/newDay")
+		.post(soccer.generateResults);
+
 //	app.route("/api/league/:id/nextFixtures")
 //		.get(soccer.nextFixtures);
 };

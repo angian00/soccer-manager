@@ -43,11 +43,11 @@ export default class App extends Component {
 									<Link to={'/'} className="nav-link">Home</Link>
 								</li>
 								<li className="nav-item">
-									<Link to={'/indexLeague'} className="nav-link">Index</Link>
+									<Link to={'/indexLeague'} className="nav-link">League Index</Link>
 								</li>
-								<li className="nav-item">
+								{/*<li className="nav-item">
 									<Link to={'/createLeague'} className="nav-link">Create League</Link>
-								</li>
+								</li>*/}
 							</ul>
 						</div>
 					</nav>

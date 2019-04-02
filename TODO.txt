@@ -1,8 +1,12 @@
+# TODO
 
- - front-end
- 	- flusso pagine
- 	- customizzazione colori, font, layout
+## Queue
+ - integrare generatore nome squadre
+ - abilitare/disabilitare elementi viewLeague a seconda di stato stagione
+ - dimensione colonne scoreboard
+ - verificare layout cards con nomi di squadre lunghi
 
+## Random stuff
  - generazione casuale risultati
  	- marcatori
  	- ammonizioni/espulsioni
@@ -12,11 +16,12 @@
  	- scouting report live gazzetta
 
 
-## Generazione nomi squadre (italiane)
-+ nomi di fantasia + nome città (es. football americano)
+ - Generazione nomi squadre
+	+ nomi di fantasia + nome città (es. football americano)
 
 
-## Stat SPI principali club
+## Resources
+- Stat SPI principali club
 https://projects.fivethirtyeight.com/soccer-api/club/spi_global_rankings.csv
 
 
@@ -27,14 +32,10 @@ https://projects.fivethirtyeight.com/soccer-api/club/spi_global_rankings.csv
 	- compare old teams with new
 	- delete old teams
 	- add new teams
-- get (current year) schedule
-- simulate next round
-- get match results so far
-- get scoreboard (standings)
 
 ### team
 - edit name
-- get game history
++ get game history
 + get stats
 + get players
 ++ edit lineup/strategy
@@ -44,22 +45,28 @@ https://projects.fivethirtyeight.com/soccer-api/club/spi_global_rankings.csv
 ++ get/edit stats
 
 ### game
-- get result
 ++ get stats
-++ simulate
+++ simulate actions
 
 
 ## Bugfixing
+ - deep linking in React
+ - refresh viewLeague dopo New Season e Generate Results
 
 ## Improvements
- - chiarire funzionamento Switch, Link Router
+ - aggiungere popup di conferma per operazioni delicate
  - canale notifica errori REST
+ - dimensioni colonne scoreboard
+
+ - ordinamenti opzionali scoreboard
+ 
+ - uniformare chiamata sequelize per getLeague e newLeagueYear
+ - chiarire funzionamento Switch, Link Router
  - aggiungere middleware di validazione
  - separare meglio logica db da controller
  - nav bar:
  	? visualizzazione responsive
  	? togliere
- - pulsante crea nuova league in basso
 
  ? verificare problemi router react
  + promozioni/retrocessioni tra leghe

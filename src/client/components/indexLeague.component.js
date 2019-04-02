@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import LeagueTableRow from './LeagueTableRow';
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+library.add(faPlus)
 
 
 export default class IndexLeague extends Component {
@@ -41,19 +47,22 @@ export default class IndexLeague extends Component {
 		return (
 			<div>
 				<h3 align="center">Available Leagues</h3>
+
 				<table className="table table-striped" style={{ marginTop: 20 }}>
 					<thead>
 						<tr>
 							<th>id</th>
 							<th>name</th>
 							<th>description</th>
-							<th colSpan="3">&nbsp;</th>
+							<th>&nbsp;</th>
 						</tr>
 					</thead>
 					<tbody>
 						{ this.tabRow() }
 					</tbody>
 				</table>
+
+				<Link to={"/createLeague"} className="btn btn-primary btn-lg">New League</Link>
 			</div>
 		);
 	}
