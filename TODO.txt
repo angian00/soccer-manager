@@ -3,8 +3,8 @@
 ## Queue
  - integrare generatore nome squadre
  - abilitare/disabilitare elementi viewLeague a seconda di stato stagione
- - dimensione colonne scoreboard
  - verificare layout cards con nomi di squadre lunghi
+
 
 ## Random stuff
  - generazione casuale risultati
@@ -50,23 +50,16 @@ https://projects.fivethirtyeight.com/soccer-api/club/spi_global_rankings.csv
 
 
 ## Bugfixing
- - deep linking in React
- - refresh viewLeague dopo New Season e Generate Results
+
 
 ## Improvements
  - aggiungere popup di conferma per operazioni delicate
  - canale notifica errori REST
- - dimensioni colonne scoreboard
-
- - ordinamenti opzionali scoreboard
  
  - uniformare chiamata sequelize per getLeague e newLeagueYear
- - chiarire funzionamento Switch, Link Router
+ - ritornare getLeague da nextYear e generateResults
  - aggiungere middleware di validazione
  - separare meglio logica db da controller
  - nav bar:
  	? visualizzazione responsive
  	? togliere
-
- ? verificare problemi router react
- + promozioni/retrocessioni tra leghe

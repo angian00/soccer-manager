@@ -15,13 +15,15 @@ export default class ViewLeague extends Component {
 
 		this.onNewYear = this.onNewYear.bind(this);
 		this.onSimulateDay = this.onSimulateDay.bind(this);
+	
+		this.onSortScoreboard = this.onSortScoreboard.bind(this);
 	}
 
 	componentDidMount() {
 		axios.get('http://localhost:8080/api/league/'+this.props.match.params.id + "?computeScoreboard=true")
-			.then(response => {
-				console.log(response.data);
-				this.setState(response.data);
+			.then(res => {
+				console.log(res.data);
+				this.setState(res.data);
 		})
 			.catch(function (error) {
 				console.log(error);
@@ -32,7 +34,8 @@ export default class ViewLeague extends Component {
 		axios.post("http://localhost:8080/api/league/" + this.props.match.params.id + "/newYear")
 			.then(res => {
 				console.log(res.data);
-				this.props.history.push('/viewLeague/' + this.props.match.params.id);
+				//this.setState(res.data);
+				window.location.reload();
 			})
 			.catch(err => console.log(err));
 	}
@@ -41,9 +44,22 @@ export default class ViewLeague extends Component {
 		axios.post("http://localhost:8080/api/league/" + this.props.match.params.id + "/newDay")
 			.then(res => {
 				console.log(res.data);
-				this.props.history.push('/viewLeague/' + this.props.match.params.id);
+				//this.setState(res.data);
+				window.location.reload();
 			})
 			.catch(err => console.log(err));
+	}
+
+
+	onSortScoreboard(sortKey) {
+		const scoreboardData = this.state.scoreboard;
+		scoreboardData.sort( (a,b) => (
+			(typeof a[sortKey]) == "string") 
+			? a[sortKey].localeCompare(b[sortKey]) 
+			: b[sortKey] - a[sortKey]
+		);
+
+		this.setState({ scoreboard: scoreboardData });
 	}
 
 
@@ -65,18 +81,18 @@ export default class ViewLeague extends Component {
 				{ (this.state.currYear) &&
 					<Tabs defaultActiveKey="scoreboard">
 						<Tab eventKey="scoreboard" title="Scoreboard">
-							<table id="scoreboardTable" className="table table-sm table-striped">
+							<table id="scoreboardTable" className="table table-sm table-striped table-responsive-sm" style={{ width: "100%"}}>
 								<thead className="thead-dark">
-									<tr>
-										<th scope="col">&nbsp;</th>
-										<th scope="col">&nbsp;</th>
-										<th scope="col">points</th>
-										<th scope="col">G</th>
-										<th scope="col">W</th>
-										<th scope="col">D</th>
-										<th scope="col">L</th>
-										<th scope="col">GF</th>
-										<th scope="col">GA</th>
+									<tr className="d-flex">
+										<th scope="col" className="col-1">&nbsp;</th>
+										<th scope="col" className="col-4" onClick={e => this.onSortScoreboard('team')}>team name</th>
+										<th scope="col" className="col-1" onClick={e => this.onSortScoreboard('nPoints')}>pts</th>
+										<th scope="col" className="col-1" onClick={e => this.onSortScoreboard('nPlayed')}>G</th>
+										<th scope="col" className="col-1" onClick={e => this.onSortScoreboard('nWon')}>W</th>
+										<th scope="col" className="col-1" onClick={e => this.onSortScoreboard('nDrawn')}>D</th>
+										<th scope="col" className="col-1" onClick={e => this.onSortScoreboard('nLost')}>L</th>
+										<th scope="col" className="col-1" onClick={e => this.onSortScoreboard('goalsFor')}>GF</th>
+										<th scope="col" className="col-1" onClick={e => this.onSortScoreboard('goalsAgainst')}>GA</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -104,22 +120,24 @@ export default class ViewLeague extends Component {
 
 	renderScoreboard() {
 		return this.state.scoreboard.map((teamScore, i) => {
-			return <tr key={i} >
-				<th scope="row"> {i+1} </th>
-				<td> {teamScore.team} </td>
-				<td> {teamScore.nPoints} </td>
-				<td> {teamScore.nPlayed} </td>
-				<td> {teamScore.nWon} </td>
-				<td> {teamScore.nDrawn} </td>
-				<td> {teamScore.nLost} </td>
-				<td> {teamScore.goalsFor} </td>
-				<td> {teamScore.goalsAgainst} </td>
+			return <tr key={i} className="d-flex">
+				<th scope="row" className="col-1"> {i+1} </th>
+				<td className="col-4"> {teamScore.team} </td>
+				<td className="col-1"> {teamScore.nPoints} </td>
+				<td className="col-1"> {teamScore.nPlayed} </td>
+				<td className="col-1"> {teamScore.nWon} </td>
+				<td className="col-1"> {teamScore.nDrawn} </td>
+				<td className="col-1"> {teamScore.nLost} </td>
+				<td className="col-1"> {teamScore.goalsFor} </td>
+				<td className="col-1"> {teamScore.goalsAgainst} </td>
 			</tr>;
 		})
 	}
 
 	renderResults() {
-		return Object.keys(this.state.results).sort().map((day, i) => {
+		let days = Object.keys(this.state.results).sort( (d1, d2) => (parseInt(d1) > parseInt(d2)) );
+
+		return days.map((day, i) => {
 			let dayFixtures = this.state.results[day];
 
 			return <FixtureCard key={day} day={day} obj={dayFixtures} />;
@@ -127,7 +145,9 @@ export default class ViewLeague extends Component {
 	}
 
 	renderSchedule() {
-		return Object.keys(this.state.schedule).map((day, i) => {
+		let days = Object.keys(this.state.schedule).sort( (d1, d2) => (parseInt(d1) > parseInt(d2)) );
+
+		return days.map((day, i) => {
 			let dayFixtures = this.state.schedule[day];
 
 			return <FixtureCard key={day} day={day} obj={dayFixtures} />;

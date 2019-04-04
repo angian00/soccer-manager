@@ -2,6 +2,7 @@ const logger = require('../logging');
 const model = require('../models/soccerModel');
 
 const Scheduler = require('../soccer/scheduler');
+const NameGenerator = require('../soccer/name_generator');
 
 
 exports.getAllLeagues = (req, res) => {
@@ -67,11 +68,8 @@ exports.getLeague = (req, res) => {
 							"goalsFor": 0, "goalsAgainst": 0};
 					}
 
-					logger.warn("scoreboardMap: %j", scoreboardMap);
-
 					for (let day in results) {
 						for (let f of results[day]) {
-							logger.warn("f: %j", f);
 							scoreboardMap[f.homeTeam]["nPlayed"] ++;
 							scoreboardMap[f.homeTeam]["goalsFor"] += f.homeGoals;
 							scoreboardMap[f.homeTeam]["goalsAgainst"] += f.visitorGoals;
@@ -143,9 +141,28 @@ exports.createLeague = (req, res) => {
 		}, {transaction: t}).then( (newLeague) => {
 			let newLeagueId = newLeague.id;
 
-			let teamPromises = [];
+			let teamGenerator = null;
+
 			if (req.body.teams) {
-				for (let teamName of req.body.teams) {
+				teamGenerator = new Promise(() => req.body.teams);
+			} else {
+				let teamNameGenerator = new NameGenerator("resources/squadre_serie_a.txt");
+				teamGenerator = teamNameGenerator.initialize().then(() => {
+					let nTeams = 20;
+					let teamNames = [];
+					for (let i=0; i < nTeams; i++) {
+						teamNames.push(teamNameGenerator.generateName());
+					}
+
+					return teamNames;
+				});
+			}
+
+
+			return teamGenerator.then(teamNames => {
+				let teamPromises = [];
+				for (let teamName of teamNames) {
+					logger.warn("teamName: %j", teamName);
 					teamPromises.push(
 						model.Team.create({
 							name: teamName,
@@ -153,12 +170,12 @@ exports.createLeague = (req, res) => {
 						}, {transaction: t})
 					);
 				}
-			}
 
-			return Promise.all(teamPromises).then( () => {
-				return newLeagueId;
-			}).catch( err => {
-				throw err;
+				return Promise.all(teamPromises).then( () => {
+					return newLeagueId;
+				}).catch( err => {
+					throw err;
+				});
 			});
 		});
 
@@ -193,18 +210,19 @@ exports.deleteLeague = (req, res) => {
 	let leagueId = parseInt(req.params.id);
 
 	return model.sequelize.transaction(t => {
-		model.Team.destroy({ where: {league_id: leagueId} }, {transaction: t})
-			.then(nDeletedRecords => {
-				model.League.destroy({ where: {id: leagueId} }, {transaction: t})
-					.then(nDeletedRecords => {
-						if (nDeletedRecords == 1) {
-							res.send("League with id: " + leagueId + " successfully deleted");    
-						} else {
-							res.status(404).send("League with id: " + leagueId + " not found");
-						}
-					});
+		model.Fixture.destroy({ where: {league_id: leagueId} }, {transaction: t}).then(nDeletedRecords => {
+			model.Team.destroy({ where: {league_id: leagueId} }, {transaction: t}).then(nDeletedRecords => {
+				model.League.destroy({ where: {id: leagueId} }, {transaction: t}).then(nDeletedRecords => {
+					if (nDeletedRecords == 1) {
+						res.send("League with id: " + leagueId + " successfully deleted");    
+					} else {
+						res.status(404).send("League with id: " + leagueId + " not found");
+					}
+				});
 			});
-		//TODO: cascade on fixtures
+
+		});
+
 	}).catch(err => {
 		logger.error(err);
 		res.status(500).send("Database error: " + err);
@@ -285,7 +303,7 @@ exports.generateResults = (req, res) => {
 				res.status(404).send("League with id: " + leagueId + " not found");		
 			
 			} else {
-				logger.warn("generating day results");
+				logger.info("generating day results");
 				let currYear = Math.max.apply(Math, league.Fixtures.map(f => f.year));
 				let currDay = Math.min.apply(Math, league.Fixtures.filter(f => (f.year == currYear) && (!f.played)).map(f => f.day));
 
@@ -300,7 +318,6 @@ exports.generateResults = (req, res) => {
 				}
 
 				let currFixtures = league.Fixtures.filter(f => (f.year == currYear) && (f.day == currDay));
-				logger.warn("currFixtures: %j", currFixtures);
 
 				let fixturePromises = [];
 				for (let f of currFixtures) {
@@ -341,7 +358,23 @@ function simulateGame(homeTeam, visitorTeam) {
 	const maxGoals = 3;
 	//TODO: improve simulator
 	return {
-		homeGoals:    Math.floor(Math.random() * (maxGoals + 1)), 
-		visitorGoals: Math.floor(Math.random() * (maxGoals + 1))
+		//homeGoals:    Math.floor(Math.random() * (maxGoals + 1)), 
+		//visitorGoals: Math.floor(Math.random() * (maxGoals + 1))
+		homeGoals:    randomPoisson(1.5),
+		visitorGoals:    randomPoisson(1.0),
 	}
+}
+
+
+function randomPoisson(mean) {
+	let L = Math.exp(-mean);
+	let p = 1.0;
+	let k = 0;
+
+	do {
+		k++;
+		p *= Math.random();
+	} while (p > L);
+
+	return (k-1);
 }

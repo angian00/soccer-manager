@@ -28,11 +28,11 @@ export default class CreateLeague extends Component {
 		};
 
 		//TODO: add team fields to html
-		let teams = [];
-		for (let i=0; i < 20; i ++) {
-			teams.push("T" + i);
-		}
-		obj.teams = teams;
+//		let teams = [];
+//		for (let i=0; i < 20; i ++) {
+//			teams.push("T" + i);
+//		}
+//		obj.teams = teams;
 		//
 
 		axios.post("http://localhost:8080/api/league/create", obj)

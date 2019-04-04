@@ -23,3 +23,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 	- Current season schedule and results
 	- Compute current season scoreboard
 	- Basic result generator
+	- sortable scoreboard
+	- team name generator

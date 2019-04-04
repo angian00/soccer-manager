@@ -7,7 +7,8 @@ const sequelize = new Sequelize({
 		timestamps: false,
 		freezeTableName: true,
 		underscored: true
-	}
+	},
+	logging: false
 });
 
 sequelize
