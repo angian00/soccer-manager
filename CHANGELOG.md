@@ -6,10 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
-- Basic skeleton of git project.
-
-- Round-robin schedule generator.
-- File-based player name generator(s).
+- Basic skeleton of full stack app
 
 - SQL schema
-- First API method implementation (/league/create)
+- API endpoints
+	- GET /league
+	- GET /league/:id
+	- POST /league/create
+	- POST /league/update
+	- POST /league/delete
+	- POST /league/newYear
+
+- Custom business logic:
+	- Round-robin schedule generator
+	- File-based player name generator(s)
+	- Current season schedule and results
+	- Compute current season scoreboard
+	- Basic result generator
+	- sortable scoreboard
+	- team name generator

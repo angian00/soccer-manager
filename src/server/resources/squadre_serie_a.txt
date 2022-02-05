@@ -1,0 +1,1 @@
+../../../resources/squadre_serie_a.txt

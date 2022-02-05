@@ -1,20 +1,12 @@
+# TODO
 
- - architettura
- 	- trasformare name generators e round robin in moduli
- 	- vedere esempio full stack react
+## Queue
+ - integrare generatore nome squadre
+ - abilitare/disabilitare elementi viewLeague a seconda di stato stagione
+ - verificare layout cards con nomi di squadre lunghi
 
- - scelta API
- 	v operazioni
- 	- schema URL
 
- - implem API
- 	- usare logger
-
- 
- - front-end
- 	- flusso pagine
- 	- brainstorming layout grafico
-
+## Random stuff
  - generazione casuale risultati
  	- marcatori
  	- ammonizioni/espulsioni
@@ -24,43 +16,50 @@
  	- scouting report live gazzetta
 
 
-## Generazione nomi squadre (italiane)
-- nomi squadre campionato serie A
-- nomi squadre campionato serie D
-+ nomi di fantasia + nome città (es. football americano)
+ - Generazione nomi squadre
+	+ nomi di fantasia + nome città (es. football americano)
 
 
-
-## Stat SPI principali club 
+## Resources
+- Stat SPI principali club
 https://projects.fivethirtyeight.com/soccer-api/club/spi_global_rankings.csv
 
 
 ## API
 
 ### league
-v create
-- start next year
-- generate rounds (schedule)
-- simulate next round
-- get match results so far
-- get scoreboard (standings)
+- edit teams
+	- compare old teams with new
+	- delete old teams
+	- add new teams
 
 ### team
-- get game history
-- get stats
-- get players
-+ edit lineup/strategy
+- edit name
++ get game history
++ get stats
++ get players
+++ edit lineup/strategy
 
 ### players
-- get game history
-+ get/edit stats
++ get game history
+++ get/edit stats
 
 ### game
-- get result
-- get stats
-- simulate
+++ get stats
+++ simulate actions
 
 
 ## Bugfixing
- - model: capire modo di fare create con association già valorizzata
 
+
+## Improvements
+ - aggiungere popup di conferma per operazioni delicate
+ - canale notifica errori REST
+ 
+ - uniformare chiamata sequelize per getLeague e newLeagueYear
+ - ritornare getLeague da nextYear e generateResults
+ - aggiungere middleware di validazione
+ - separare meglio logica db da controller
+ - nav bar:
+ 	? visualizzazione responsive
+ 	? togliere
