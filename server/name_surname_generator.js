@@ -41,6 +41,8 @@ rl2.on('close', function(line) {
 
 
 function generateFullName() {
+	//console.log(firstNames[1]);
+
 	return firstNames[Math.floor(Math.random() * nFirstNames)] + " " + 
 		surnames[Math.floor(Math.random() * nSurnames)];
 }
